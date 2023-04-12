@@ -54,7 +54,7 @@
     <input type="hidden" name="id" value="${id}">
     <br><br>
     <input type="submit" value="Save" value="${employee.id}">
-    <a href="listEmployees">back to Employees list</a>
+    <a href="employees">back to Employees list</a>
 </form>
 
 </body>
