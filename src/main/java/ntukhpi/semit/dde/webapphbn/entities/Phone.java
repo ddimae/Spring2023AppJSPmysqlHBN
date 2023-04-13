@@ -36,13 +36,13 @@ public class Phone {
     private boolean activePhone = true;
 
     //КАК Сдеалать так, чтобЫ только один телефон был основным = финансовым???!!!
-    @Column(name = "main",nullable = false)
-    @ColumnDefault(value="FALSE")
-    private boolean mainPhone; //main
+    //    @Column(name = "main",nullable = false)
+    //    @ColumnDefault(value="FALSE")
+    //    private boolean mainPhone; //main
 
     //https://www.javaguides.net/2022/02/spring-data-jpa-one-to-many-bidirectional-mapping.html
     // default fetch type for ManyToOne: EAGER
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne //(fetch = FetchType.LAZY) war trouble during test when this option set
     //updatable = false <==== Not take part in UPDATE ====> you can not change owner of this number. only delete
     @JoinColumn(name = "employee_id",nullable = false,updatable = false)
     private Employee owner;

@@ -194,7 +194,6 @@ public class DAOEmployeesHBN {
         boolean deleteOk = false;
         if (id != -1) {
             Transaction transaction = null;
-            //DELETE NEW&Updated and Show Employee after deleting
             try (Session session = HibernateUtil.getSessionFactory().openSession()) {
                 // start a transaction
                 transaction = session.beginTransaction();

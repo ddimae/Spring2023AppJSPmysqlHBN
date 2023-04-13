@@ -23,11 +23,7 @@ import java.util.List;
  * In presented view can work with any type of DBMS
  */
 public class DAO_INN_HBN {
-    // Set of final String variables with SQL query text
-
-//
-
-    /**
+     /**
      * Method returned list of inn get from DB table inns
      *
      * @return  ArrayList<INN>
@@ -44,7 +40,7 @@ public class DAO_INN_HBN {
     }
 
     /**
-     * Method returned list of Employee get from DB table Employee
+     * Method returned record from table INN by owner
      *
      * @return INN
      */
@@ -71,6 +67,33 @@ public class DAO_INN_HBN {
     }
 
     /**
+     * Method returned record from table INN by Id
+     *
+     * @return INN
+     */
+    public static INN getINNbyId(Long id) {
+        List<INN> results = null;
+        INN inn = null;
+        //Find in DB by owner
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            //New approach
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<INN> cr = cb.createQuery(INN.class);
+            Root<INN> root = cr.from(INN.class);
+            cr.select(root).where(cb.equal(root.get("Id"), id));
+            Query<INN> query = session.createQuery(cr);
+            results = query.getResultList();
+            if (!results.isEmpty()) {
+                inn = results.get(0);
+            } else {
+            }
+        } catch (Exception e) {
+            System.err.println("******* Find INN in db (ByID) PROBLEM ********");
+        }
+        return inn;
+    }
+
+    /**
      * Method returned list of Employee get from DB table Employee
      *
      * @return INN
@@ -92,20 +115,19 @@ public class DAO_INN_HBN {
             } else {
             }
         } catch (Exception e) {
-            System.err.println("******* Find INN in db (ByNumber) PROBLeM ********");
+            System.err.println("******* Find INN in db (ByNumber) PROBLEM ********");
         }
         return inn;
     }
 
     /**
-     * Method to insert new record of Employee
+     * Method to insert new record of INN
      *
      * @param newINN - instance of Employee for storing in table
      * @return boolean - true if record has been added, false - in other case
      */
     public static boolean insert(INN newINN) {
         boolean insertOk = false;
-        //INSERT NEW and Show newINN after insert
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
@@ -125,6 +147,64 @@ public class DAO_INN_HBN {
         return insertOk;
     }
 
+    /**
+     * Method to update record of INN with specified id
+     *
+     * @param id          - specified id
+     * @param newINN - instance of INN for storing in table
+     * @return boolean - true if record has been updated, false - in other case
+     */
+    public static boolean update(Long id, INN newINN) {
+        boolean updateOk = false;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            INN innToUpdate = session.get(INN.class, id);
+            innToUpdate.setNumber(newINN.getNumber()); //!!!
+            innToUpdate.setIssued(newINN.getIssued());
+            innToUpdate.setDateIssued(newINN.getDateIssued());
+            session.update(innToUpdate);
+            transaction.commit();
+            updateOk = true;
+        } catch (Exception ex) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            System.err.println("DAO_INN_HBN#update ===> Something went wrong!");
+            updateOk = false;
+        }
+        return updateOk;
+    }
+
+    /**
+     * Method to delete record with specified id
+     *
+     * @param id  - specified id
+     * @return boolean - true if record has been updated, false - in other case
+     */
+    public static boolean deleteByID(Long id) {
+        boolean deleteOk = false;
+        if (id != -1) {
+            Transaction transaction = null;
+            try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                // start a transaction
+                transaction = session.beginTransaction();
+                INN innToDelete = session.get(INN.class, id);
+                // delete the INN objects
+                session.delete(innToDelete);
+                // commit transaction
+                transaction.commit();
+                deleteOk = true;
+            } catch (Exception e) {
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                System.err.println("DAO_INN_HBN#delete ===> Something went wrong!");
+                deleteOk = false;
+            }
+        }
+        return deleteOk;
+    }
 
 
 }
