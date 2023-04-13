@@ -21,15 +21,14 @@ public class Phone {
     @Column(name="phone_number", nullable=false, length=10,unique = true)
     private String phoneNumber;
     //https://www.javaguides.net/2018/11/hibernate-5-enum-type-mapping-example.html
-    @Enumerated(EnumType.STRING)
 
-    // How to set values by default
-    // https://ask-dev.ru/info/36428/setting-default-values-for-columns-in-jpa
+    @Enumerated(EnumType.STRING)
     //HOME, MOBILE, OFFICE
-    //@Enumerated(EnumType.STRING)
     @Column(name = "number_type", nullable = false, length = 10)
     @Convert(converter = PhoneNumberTypeConverter.class)
     //@ColumnDefault(value="MOBILE")
+    // https://ask-dev.ru/info/36428/setting-default-values-for-columns-in-jpa
+    // How to set values by default ?!
     private PhoneNumberType phoneNumberType;
 
     @Column(name = "active",nullable = false)
@@ -44,16 +43,9 @@ public class Phone {
     //https://www.javaguides.net/2022/02/spring-data-jpa-one-to-many-bidirectional-mapping.html
     // default fetch type for ManyToOne: EAGER
     @ManyToOne(fetch = FetchType.LAZY)
+    //updatable = false <==== Not take part in UPDATE ====> you can not change owner of this number. only delete
     @JoinColumn(name = "employee_id",nullable = false,updatable = false)
     private Employee owner;
-
-    public Employee getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Employee owner) {
-        this.owner = owner;
-    }
 
 
 }
