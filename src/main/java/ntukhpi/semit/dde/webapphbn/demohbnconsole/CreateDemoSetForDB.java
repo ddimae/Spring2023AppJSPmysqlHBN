@@ -59,7 +59,7 @@ public class CreateDemoSetForDB {
             transaction = session.beginTransaction();
             owner = DAOEmployeesHBN.getEmployeeByName(names[0]);
             DAO_INN_HBN.insert(
-                    new INN(-1l, 25634747474l, "Podatkova Shevchenkivskogo rajinu",
+                    new INN(-1l, 2563474747l, "Podatkova Shevchenkivskogo rajonu",
                     LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
                             new Random().nextInt(12)+1,
                             new Random().nextInt(28)+1),
@@ -68,6 +68,70 @@ public class CreateDemoSetForDB {
             owner = DAOEmployeesHBN.getEmployeeByName(names[1]);
             DAO_INN_HBN.insert(
                     new INN(-1l, 2563272727l, "Podatkova Kharkiv region",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[2]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 3492767676l, "Podatkova Kharkiv region",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[3]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 2592292929l, "Podatkova Shevchenkivskogo rajonu",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[4]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 2533334433l, "Podatkova Kharkiv region",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[5]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 2593939393l, "Podatkova Shevchenkivskogo rajonu",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[6]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 3562626262l, "Podatkova Dergachivskogo rajonu",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[7]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 3583839092l, "Podatkova Shevchenkivskogo rajonu",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[8]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 2626552525l, "Podatkova Slobidskogo rajonu",
+                            LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
+                                    new Random().nextInt(12)+1,
+                                    new Random().nextInt(28)+1),
+                            owner)
+            );
+            owner = DAOEmployeesHBN.getEmployeeByName(names[9]);
+            DAO_INN_HBN.insert(
+                    new INN(-1l, 3578787878l, "Podatkova Dergachivskogo rajonu",
                             LocalDate.of(LocalDate.now().getYear()- owner.getAge()+18,
                                     new Random().nextInt(12)+1,
                                     new Random().nextInt(28)+1),
