@@ -1,10 +1,15 @@
 package ntukhpi.semit.dde.webapphbn.daoemployees;
 
-import ntukhpi.semit.dde.webapphbn.model.Employee;
+import ntukhpi.semit.dde.webapphbn.entities.Employee;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,21 +24,21 @@ import java.util.List;
 public class DAOEmployeesHBN {
     // Set of final String variables with SQL query text
 
-    private static final String SELECT_BY_ID_SQL_TEXT =
-            "SELECT * FROM EMPLOYEE WHERE id=?";
-    private static final String SELECT_ID_SQL_TEXT =
-            "SELECT * FROM employee WHERE name=?";
-    private static final String INSERT_SQL_TEXT =
-            "INSERT INTO employee (name,pol,age,salary) VALUES (?,?,?,?)";
-
-    private static final String UPDATE_SQL_TEXT =
-            "UPDATE employee SET name = ?,pol = ?,age = ?,salary = ? WHERE (id = ?)";
-
-    private static final String UPDATE_NAME_SQL_TEXT =
-            "UPDATE employee SET name = ? WHERE (id = ?)";
-
-    private static final String DELETE_ID_SQL_TEXT =
-            "DELETE FROM employee WHERE (id = ?)";
+//    private static final String SELECT_BY_ID_SQL_TEXT =
+//            "SELECT * FROM EMPLOYEE WHERE id=?";
+//    private static final String SELECT_ID_SQL_TEXT =
+//            "SELECT * FROM employee WHERE name=?";
+//    private static final String INSERT_SQL_TEXT =
+//            "INSERT INTO employee (name,pol,age,salary) VALUES (?,?,?,?)";
+//
+//    private static final String UPDATE_SQL_TEXT =
+//            "UPDATE employee SET name = ?,pol = ?,age = ?,salary = ? WHERE (id = ?)";
+//
+//    private static final String UPDATE_NAME_SQL_TEXT =
+//            "UPDATE employee SET name = ? WHERE (id = ?)";
+//
+//    private static final String DELETE_ID_SQL_TEXT =
+//            "DELETE FROM employee WHERE (id = ?)";
 
 
     /**
@@ -75,12 +80,32 @@ public class DAOEmployeesHBN {
      * Method to found record id by name
      *
      * @param name - key field in table Employee, specified value for looking in table
-     * @return int value - id found record or -1, record with specified name not it DB
+     * @return Employee value - id found record or -1, record with specified name not it DB
      */
-    public static int getIdByName(Connection con, String name) {
-        int id = -1;
-        //TO DO
-        return id;
+    public static Employee getEmployeeByName(String name) {
+        Employee empl = null;
+        List<Employee> results = null;
+        //Find in DB by id
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            //New approach
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Employee> cr = cb.createQuery(Employee.class);
+            Root<Employee> root = cr.from(Employee.class);
+            cr.select(root).where(cb.equal(root.get("name"),name));
+            Query<Employee> query = session.createQuery(cr);
+            results = query.getResultList();
+            //Deprecated approach
+//            results = session.createCriteria(Employee.class)
+//                    .add(Restrictions.eq("name", name))
+//                    .list();
+            if (results!=null) {
+                empl = results.get(0);
+            } else {
+            }
+        } catch (Exception e) {
+            System.err.println("=== getEmployeeByName === Something went wrong!");
+        }
+        return empl;
     }
 
     /**

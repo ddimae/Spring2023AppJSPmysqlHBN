@@ -1,4 +1,4 @@
-package ntukhpi.semit.dde.webapphbn.model;
+package ntukhpi.semit.dde.webapphbn.entities;
 
 import java.util.ArrayList;
 

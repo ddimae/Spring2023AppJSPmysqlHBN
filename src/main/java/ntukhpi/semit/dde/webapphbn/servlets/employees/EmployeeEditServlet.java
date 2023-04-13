@@ -2,7 +2,7 @@ package ntukhpi.semit.dde.webapphbn.servlets.employees;
 
 
 import ntukhpi.semit.dde.webapphbn.daoemployees.DAOEmployeesHBN;
-import ntukhpi.semit.dde.webapphbn.model.Employee;
+import ntukhpi.semit.dde.webapphbn.entities.Employee;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

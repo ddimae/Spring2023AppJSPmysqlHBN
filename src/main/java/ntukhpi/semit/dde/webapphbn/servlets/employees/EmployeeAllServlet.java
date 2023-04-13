@@ -1,10 +1,9 @@
 package ntukhpi.semit.dde.webapphbn.servlets.employees;
 
 import ntukhpi.semit.dde.webapphbn.daoemployees.DAOEmployeesHBN;
-import ntukhpi.semit.dde.webapphbn.model.Employee;
-import ntukhpi.semit.dde.webapphbn.model.EmployeeList;
+import ntukhpi.semit.dde.webapphbn.entities.Employee;
+import ntukhpi.semit.dde.webapphbn.entities.EmployeeList;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
-import org.hibernate.Session;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/employees")

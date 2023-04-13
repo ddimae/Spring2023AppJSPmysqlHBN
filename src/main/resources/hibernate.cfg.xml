@@ -14,9 +14,7 @@
 		<property name="show_sql">true</property>
 		
 		<!-- Теги маппинга классов -->
-		<mapping class="ntukhpi.semit.dde.webapphbn.model.Employee" />
-		<mapping class="ntukhpi.semit.dde.webapphbn.model.INN" />
-		<mapping class="ntukhpi.semit.dde.webapphbn.model.Phone" />
+		<mapping class="ntukhpi.semit.dde.webapphbn.entities.Employee" />
 		<!--<mapping resource="ntukhpi/semit/dde/webapphbn/model/Employee.hbm.xml"></mapping>-->
 
 	</session-factory>

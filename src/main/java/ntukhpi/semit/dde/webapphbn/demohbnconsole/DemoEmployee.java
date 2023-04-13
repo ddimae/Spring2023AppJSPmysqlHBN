@@ -1,13 +1,12 @@
 package ntukhpi.semit.dde.webapphbn.demohbnconsole;
 
 import ntukhpi.semit.dde.webapphbn.daoemployees.DAOEmployeesHBN;
-import ntukhpi.semit.dde.webapphbn.model.Employee;
+import ntukhpi.semit.dde.webapphbn.entities.Employee;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-import java.util.Optional;
 
 public class DemoEmployee {
     public static void main(String[] args) {
@@ -19,7 +18,8 @@ public class DemoEmployee {
             System.out.println("\n\nHIBERNATE підключивася до БД!!!");
             // start a transaction
             // transaction = session.beginTransaction();
-            employees = session.createQuery("from Employee", Employee.class).list();
+            //employees = session.createQuery("from Employee", Employee.class).list();
+            employees = DAOEmployeesHBN.getEmployeeList();
             employees.forEach(System.out::println);
             // commit transaction
             //     transaction.commit();
@@ -103,9 +103,11 @@ public class DemoEmployee {
 
         //DELETE NEW&Updated and Show Employee after deleting
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            //Employee emplToDelete = session.get(Employee.class, idToFind);
+            Employee emplToDelete =DAOEmployeesHBN.getEmployeeByName("Rebrov");
             // start a transaction
             transaction = session.beginTransaction();
-            Employee emplToDelete = session.get(Employee.class, idToFind);
+
             // delete the Employee objects
             session.delete(emplToDelete);
             // commit transaction
@@ -120,32 +122,7 @@ public class DemoEmployee {
             e.printStackTrace();
         }
 
-        //INSERT AGAIN
-        System.out.println("INSERT");
-
-        //INSERT NEW and Show Employee after insert
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-            // save the student objects
-            session.save(new Employee(0l,"Zhuk",true,50,2500000.0));
-            session.save(new Employee(0l,"Kot",true,51,2500000.0));
-            session.save(new Employee(0l,"Gus'",true,60,99000.0));
-            // commit transaction
-            transaction.commit();
-            System.out.println("\nAfter adding");
-            employees = session.createQuery("from Employee", Employee.class).list();
-            employees.forEach(System.out::println);
-        } catch (Exception e) {
-            System.err.println("====== Mistake when add date in end of work. Data present in db ======");
-            if (transaction != null) {
-                transaction.rollback();
-            }
-
-        }
-
-
-        System.out.println("\n\n============================ HIBERNATE відпрацював!!! =======================");
+                System.out.println("\n\n============================ HIBERNATE відпрацював!!! =======================");
         }
     }
 
