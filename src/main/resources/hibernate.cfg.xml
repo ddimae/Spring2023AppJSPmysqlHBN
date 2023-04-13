@@ -17,6 +17,7 @@
 		<mapping class="ntukhpi.semit.dde.webapphbn.entities.Employee"/>
 		<mapping class="ntukhpi.semit.dde.webapphbn.entities.INN"/>
 		<mapping class="ntukhpi.semit.dde.webapphbn.entities.Phone"/>
+		<mapping class="ntukhpi.semit.dde.webapphbn.entities.Team"/>
 		<!--<mapping resource="ntukhpi/semit/dde/webapphbn/model/Employee.hbm.xml"></mapping>-->
 
 	</session-factory>
