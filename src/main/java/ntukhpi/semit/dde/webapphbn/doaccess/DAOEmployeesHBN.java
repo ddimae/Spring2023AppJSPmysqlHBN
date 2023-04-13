@@ -1,4 +1,4 @@
-package ntukhpi.semit.dde.webapphbn.doaaccess;
+package ntukhpi.semit.dde.webapphbn.doaccess;
 
 import ntukhpi.semit.dde.webapphbn.entities.Employee;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
@@ -69,7 +69,7 @@ public class DAOEmployeesHBN {
             //Lets find object just inserted.
             empl = session.get(Employee.class, id);
         } catch (Exception e) {
-            System.err.println("getEmployeeById#Something went wrong!");
+            System.err.println("=== DAOEmployeesHBN#getEmployeeById ====> Something went wrong!");
         }
         return empl;
     }
@@ -96,12 +96,12 @@ public class DAOEmployeesHBN {
 //            results = session.createCriteria(Employee.class)
 //                    .add(Restrictions.eq("name", name))
 //                    .list();
-            if (results!=null) {
+            if (!results.isEmpty()) {
                 empl = results.get(0);
             } else {
             }
         } catch (Exception e) {
-            System.err.println("=== getEmployeeByName === Something went wrong!");
+            System.err.println("=== DAOEmployeesHBN#getEmployeeByName === Something went wrong!");
         }
         return empl;
     }
@@ -128,7 +128,7 @@ public class DAOEmployeesHBN {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.err.println("insert#Something went wrong!");
+            System.err.println("DAOEmployeesHBN#insert ===> Something went wrong!");
             insertOk = false;
         }
         return insertOk;
@@ -160,7 +160,7 @@ public class DAOEmployeesHBN {
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.err.println("update#Something went wrong!");
+            System.err.println("DAOEmployeesHBN#update ===> Something went wrong!");
             updateOk = false;
         }
         return updateOk;
@@ -208,7 +208,7 @@ public class DAOEmployeesHBN {
                 if (transaction != null) {
                     transaction.rollback();
                 }
-                System.err.println("delete#Something went wrong!");
+                System.err.println("DAOEmployeesHBN#delete ===> Something went wrong!");
                 deleteOk = false;
             }
         }

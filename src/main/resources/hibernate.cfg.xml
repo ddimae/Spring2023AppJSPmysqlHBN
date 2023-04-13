@@ -9,12 +9,13 @@
 		<property name="connection.password">root</property>
 		<!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
-		<property name="hibernate.hbm2ddl.auto">update</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 		<!-- Echo the SQL to stdout -->
 		<property name="show_sql">true</property>
 		
 		<!-- Теги маппинга классов -->
 		<mapping class="ntukhpi.semit.dde.webapphbn.entities.Employee" />
+		<mapping class="ntukhpi.semit.dde.webapphbn.entities.INN" />
 		<!--<mapping resource="ntukhpi/semit/dde/webapphbn/model/Employee.hbm.xml"></mapping>-->
 
 	</session-factory>

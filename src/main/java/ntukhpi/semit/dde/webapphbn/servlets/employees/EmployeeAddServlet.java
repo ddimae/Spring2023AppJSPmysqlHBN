@@ -1,6 +1,6 @@
 package ntukhpi.semit.dde.webapphbn.servlets.employees;
 
-import ntukhpi.semit.dde.webapphbn.doaaccess.DAOEmployeesHBN;
+import ntukhpi.semit.dde.webapphbn.doaccess.DAOEmployeesHBN;
 import ntukhpi.semit.dde.webapphbn.entities.Employee;
 
 import javax.servlet.RequestDispatcher;
