@@ -2,11 +2,9 @@ package ntukhpi.semit.dde.webapphbn.demohbnconsole;
 
 import ntukhpi.semit.dde.webapphbn.doaccess.DAOEmployeesHBN;
 import ntukhpi.semit.dde.webapphbn.doaccess.DAOPhonesHBN;
+import ntukhpi.semit.dde.webapphbn.doaccess.DAOTeamsHBN;
 import ntukhpi.semit.dde.webapphbn.doaccess.DAO_INN_HBN;
-import ntukhpi.semit.dde.webapphbn.entities.Employee;
-import ntukhpi.semit.dde.webapphbn.entities.INN;
-import ntukhpi.semit.dde.webapphbn.entities.Phone;
-import ntukhpi.semit.dde.webapphbn.entities.PhoneNumberType;
+import ntukhpi.semit.dde.webapphbn.entities.*;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -160,9 +158,23 @@ public class CreateDemoSetForDB {
                 );
             }
         }
+        //============================================================================
+        //=======================  INSERT IN teams ==================================
+        System.out.println("Insert test data in teams");
+        Team team1 = new Team(1l,"Java001", ProgramLanguage.JAVA);
+        DAOTeamsHBN.insert(team1);
+        String cod2="JavaScript";
+        Team team2 = new Team(1l,"JavaScript", ProgramLanguage.JavaScript);
+        DAOTeamsHBN.insert(team2);
+        Team team3 = new Team(1l,"JavaScript02", ProgramLanguage.JavaScript);
+        DAOTeamsHBN.insert(team3);
+        Team team4 = new Team(1l,"Java002", ProgramLanguage.JAVA);
+        DAOTeamsHBN.insert(team4);
+        Team team5 = new Team(1l,"CSharp2022", ProgramLanguage.CSHARP);
+        DAOTeamsHBN.insert(team5);
 
         //============================================================================
-        //============================================================================
+        //****************************************************************************
         //SELECT AND OUTPUT DATA
         //Output from employees
         List<Employee> employees = new ArrayList<Employee>();
@@ -182,7 +194,7 @@ public class CreateDemoSetForDB {
             outputList(inns);
         }
 
-        //Output Epmloyees with Phones
+        //Output Employees with Phones
         System.out.println("\nOUTPUT PHONES");
         employees = DAOEmployeesHBN.getEmployeeList();
         List<Phone> phones = new ArrayList<>();
@@ -195,7 +207,15 @@ public class CreateDemoSetForDB {
                 System.out.println("Phones ABSENT!");
             }
         }
-
+        //Output Teams
+        System.out.println("\nOUTPUT TEAMS");
+        List<Team> teams = new ArrayList<>();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            //SELECT AND OUTPUT teams
+            System.out.println("\nOUTPUT teams");
+            teams = DAOTeamsHBN.getTeamList();
+            outputList(teams);
+        }
 
     }
 
