@@ -2,7 +2,6 @@ package ntukhpi.semit.dde.webapphbn.servlets.employees;
 
 import ntukhpi.semit.dde.webapphbn.doaccess.DAOEmployeesHBN;
 import ntukhpi.semit.dde.webapphbn.entities.Employee;
-import ntukhpi.semit.dde.webapphbn.entities.EmployeeList;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +17,7 @@ import java.util.List;
 @WebServlet("/employees")
 public class EmployeeAllServlet extends HttpServlet {
 
-    public static EmployeeList mylist = new EmployeeList();
+    public static List<Employee> mylist = new EmployeeList();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("EmployeeAllServlet#doGet");
