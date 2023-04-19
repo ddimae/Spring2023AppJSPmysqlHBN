@@ -4,17 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<%@ include file="Menu.jsp"%>
-<title>ntukhpi</title>
+<title>HBN 2023 DDE</title>
 </head>
 <body>
-<h1>NTU "KhPI" Structure MAY 2022</h1>
-<h1>Hibernate in action!</h1>
-<br>
+<h1>Hibernate Demo Project 2023</h1>
+<h2>PhD Associate Professor Dmytro Dvukhhlavov</h2>
+<h2>SEMIT, CSIT, NTU "KhPI"</h2>
+<br><br><br>
 <h3>Сьогодні <%=java.time.LocalDate.now() %></h3>
-
 </body>
-<footer>
-	<%@ include file="Footer.jsp"%>
-</footer>
 </html>

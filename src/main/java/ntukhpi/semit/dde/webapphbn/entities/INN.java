@@ -34,13 +34,6 @@ public class INN {
     @JoinColumn(name = "id_employee",nullable = false,updatable = false,unique = true)
     private Employee owner;
 
-    public Employee getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Employee owner) {
-        this.owner = owner;
-    }
 
 
 }

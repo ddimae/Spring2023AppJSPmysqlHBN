@@ -38,7 +38,7 @@ public class DemoINN {
             Transaction transaction = null;
             try (Session session = sf.openSession()) {
                 String nameForInsert = "Kovrov";
-                owner = new Employee(-1l, nameForInsert, true, 35, 50000.0);
+                owner = new Employee(-1l, nameForInsert, true, 35, 50000.0,null);
                 System.out.println(owner);
                 try {
                     transaction = session.beginTransaction();

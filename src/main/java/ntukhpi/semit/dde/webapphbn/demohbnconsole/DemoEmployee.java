@@ -34,7 +34,7 @@ public class DemoEmployee {
         //INSERT
         System.out.println("INSERT");
         String nameNewEmpl="Morgun";
-        Employee employee = new Employee(1l,nameNewEmpl, true, 50, 10000000.0);
+        Employee employee = new Employee(1l,nameNewEmpl, true, 50, 10000000.0,null);
 
         //INSERT NEW and Show Employee after insert
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {

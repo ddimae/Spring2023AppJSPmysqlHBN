@@ -2,8 +2,8 @@ package ntukhpi.semit.dde.webapphbn.servlets.employees;
 
 import ntukhpi.semit.dde.webapphbn.doaccess.DAOEmployeesHBN;
 import ntukhpi.semit.dde.webapphbn.entities.Employee;
-import ntukhpi.semit.dde.webapphbn.entities.EmployeeList;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
+import org.hibernate.Session;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,12 +18,12 @@ import java.util.List;
 @WebServlet("/employees")
 public class EmployeeAllServlet extends HttpServlet {
 
-    public static EmployeeList mylist = new EmployeeList();
+    public static List<Employee> mylist;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("EmployeeAllServlet#doGet");
-        List<Employee> mylist = DAOEmployeesHBN.getEmployeeList();
-        //EmployeeList mylist = new EmployeeList(5);
+        mylist = DAOEmployeesHBN.getEmployeeList();
         request.setAttribute("employees", mylist);
         String path = "/views/employees/employees.jsp";
         ServletContext servletContext = getServletContext();
