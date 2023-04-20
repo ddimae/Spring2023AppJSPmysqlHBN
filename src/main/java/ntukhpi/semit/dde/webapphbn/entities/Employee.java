@@ -24,7 +24,11 @@ import lombok.NonNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+//https://projectlombok.org/features/ToString
 @ToString(doNotUseGetters = true,exclude = {"teamsOfEmployee"})
+//Its need HashCode and Equals - without it not work method Map.remove(Employee)
+//https://projectlombok.org/features/EqualsAndHashCode
+@EqualsAndHashCode(doNotUseGetters = true,onlyExplicitlyIncluded = true)
 public class Employee implements Comparable<Employee> {
 
     @Id
@@ -35,6 +39,7 @@ public class Employee implements Comparable<Employee> {
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
     @NonNull
+    @EqualsAndHashCode.Include
     private String name;
 
     @Column(name = "pol", nullable = false)
@@ -54,8 +59,11 @@ public class Employee implements Comparable<Employee> {
     @NonNull
     private Double salary;
 
-	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "work_in_team", joinColumns = @JoinColumn(name = "id_empl"))
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "work_in_team", joinColumns = @JoinColumn(name = "id_empl")
+            //https://www.baeldung.com/jpa-indexes#2-multicolumn-index
+            //,indexes ={ @Index(name = "TeamEmplUniqueIndex", columnList = "id_team,id_empl")}
+    )
 	@MapKeyJoinColumn(name = "id_team")
 	private Map<Team, WorkInterval> teamsOfEmployee = new HashMap<>();
 

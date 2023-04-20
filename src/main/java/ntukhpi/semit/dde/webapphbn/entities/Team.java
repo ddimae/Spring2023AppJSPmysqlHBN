@@ -14,7 +14,11 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
+//https://projectlombok.org/features/ToString
 @ToString(onlyExplicitlyIncluded = true)
+//Its need HashCode and Equals - without it not work method Map.remove(Employee)
+//https://projectlombok.org/features/EqualsAndHashCode
+@EqualsAndHashCode(doNotUseGetters = true,onlyExplicitlyIncluded = true)
 public class Team {
 
     @Id
@@ -25,6 +29,7 @@ public class Team {
     @Column(name = "team_cod", nullable = false, length = 16, unique = true)
     @NonNull
     @ToString.Include
+    @EqualsAndHashCode.Include
     private String teamCod;
 
     @Enumerated(EnumType.STRING)
@@ -34,7 +39,7 @@ public class Team {
     @ToString.Include
     private ProgramLanguage pl;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "work_in_team", joinColumns = @JoinColumn(name = "id_team"))
     @MapKeyJoinColumn(name = "id_empl")
     private Map<Employee, WorkInterval> employeesOfTeam = new HashMap<>();

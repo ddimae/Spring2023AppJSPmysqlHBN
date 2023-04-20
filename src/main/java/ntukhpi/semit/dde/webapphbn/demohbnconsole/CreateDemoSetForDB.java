@@ -1,19 +1,13 @@
 package ntukhpi.semit.dde.webapphbn.demohbnconsole;
 
-import ntukhpi.semit.dde.webapphbn.doaccess.DAOEmployeesHBN;
-import ntukhpi.semit.dde.webapphbn.doaccess.DAOPhonesHBN;
-import ntukhpi.semit.dde.webapphbn.doaccess.DAOTeamsHBN;
-import ntukhpi.semit.dde.webapphbn.doaccess.DAO_INN_HBN;
+import ntukhpi.semit.dde.webapphbn.doaccess.*;
 import ntukhpi.semit.dde.webapphbn.entities.*;
 import ntukhpi.semit.dde.webapphbn.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class CreateDemoSetForDB {
 
@@ -31,7 +25,8 @@ public class CreateDemoSetForDB {
         //START ENTRANCE OF DATABASE
 
         String[] names = new String[]{"Zhuk", "Kot", "Gusin", "Zhatova", "Shatova", "Svatok", "Katz", "Kotov", "Lomov", "Popova"};
-
+        List<Team> teams = null;
+        List<Employee> employees = null;
         // If create Session ok
         //INSERT DATA
 
@@ -249,7 +244,6 @@ public class CreateDemoSetForDB {
         System.out.println("Insert test data in teams");
         try {
             Team team1 = new Team("Java001", ProgramLanguage.JAVA);
-
             DAOTeamsHBN.insert(team1);
         } catch (Exception ex) {
             System.out.println("Team not insert, maybe it present in Database");
@@ -280,8 +274,20 @@ public class CreateDemoSetForDB {
         }
         //============================================================================
         //=======================  INSERT IN teams ==================================
-        System.out.println("Insert test data in teams");
-
+        System.out.println("Insert test data about teams employees list");
+        teams = DAOTeamsHBN.getTeamList();
+        //In team Java001 work boys from 16/8/2022 to 22/11/2022
+        Team team = teams.get(0);
+        employees = DAOEmployeesHBN.getEmployeeList().stream().filter((empl) -> empl.isPol()).toList();
+        DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees, team, new WorkInterval(LocalDate.of(2022, 8, 16), LocalDate.of(2022, 11, 22)));
+        //In team JavaScript work girls from 15/9/2022 to 23/12/2022
+        team = teams.get(1);
+        employees = DAOEmployeesHBN.getEmployeeList().stream().filter((empl) -> !empl.isPol()).toList();
+        DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees, team, new WorkInterval(LocalDate.of(2022, 9, 15), LocalDate.of(2022, 12, 23)));
+        //All employees now work in Java002
+        team = teams.get(3);
+        employees = DAOEmployeesHBN.getEmployeeList();
+        DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees, team, new WorkInterval(LocalDate.now(), null));
         //============================================================================
         try {
             Thread.sleep(3000);
@@ -291,7 +297,7 @@ public class CreateDemoSetForDB {
         //****************************************************************************
         //SELECT AND OUTPUT DATA
         //Output from employees
-        List<Employee> employees = new ArrayList<Employee>();
+        employees = new ArrayList<Employee>();
         //SELECT AND OUTPUT employees
         System.out.println("\nOUTPUT employees");
         employees = DAOEmployeesHBN.getEmployeeList();
@@ -319,19 +325,13 @@ public class CreateDemoSetForDB {
         }
         //Output Teams
         System.out.println("\nOUTPUT TEAMS");
-        List<Team> teams = new ArrayList<>();
+        teams = new ArrayList<>();
         //SELECT AND OUTPUT teams
         teams = DAOTeamsHBN.getTeamList();
         outputList(teams);
 
         //OUTPUT Employee work
-//        System.out.println("\nOUTPUT TEAMS Employees list");
-//        Employee empl1 = DAOEmployeesHBN.getEmployeeById(1);
-//        if (empl1!=null) {
-//            outputList(Arrays.asList(empl1.getTeamsEmpl().entrySet().toArray()));
-//        }
-
-
+        outputTeamsEmplyeesList();
     }
 
     private static void outputList(List list) {
@@ -339,6 +339,25 @@ public class CreateDemoSetForDB {
             System.out.println("list is empty");
         } else {
             list.stream().forEach(System.out::println);
+        }
+    }
+
+    private static void outputTeamsEmplyeesList() {
+        //OUTPUT INFO ABOUT WORK
+        System.out.println("\nInfo about teams");
+        List<Team> teams = DAOTeamsHBN.getTeamList();
+        for (Team t : teams) {
+            System.out.println(t.getTeamCod() + " " + t.getPl());
+            Map<Employee, WorkInterval> sklad = t.getEmployeesOfTeam();
+            if (!sklad.isEmpty()) {
+                for (Map.Entry<Employee, WorkInterval> entry : sklad.entrySet()) {
+                    System.out.println(entry.getKey() + " ("
+                            + entry.getValue().getWorkStart() + ","
+                            + entry.getValue().getWorkEnd() + ")");
+                }
+            } else {
+                System.out.println("No info");
+            }
         }
     }
 }

@@ -125,10 +125,10 @@ public class DAOEmployeesHBN {
             transaction.commit();
             insertOk = true;
         } catch (Exception e) {
+            System.err.println("DAOEmployeesHBN#insert ===> Something went wrong!");
             if (transaction != null) {
                 transaction.rollback();
             }
-            System.err.println("DAOEmployeesHBN#insert ===> Something went wrong!");
             insertOk = false;
         }
         return insertOk;
