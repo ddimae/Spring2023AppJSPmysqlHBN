@@ -52,35 +52,35 @@ public class EmployeeEditServlet extends HttpServlet {
         int age = Integer.parseInt(ageStr);
         double salary = Double.parseDouble(salaryStr);
         boolean pol = polStr.equals("male") ? true : false;
-        Employee emplForUdate = new Employee(-1l, nameStr, pol, age, salary);
-        System.out.println("emplForUdate "+emplForUdate);
+//        Employee emplForUdate = new Employee(-1l, nameStr, pol, age, salary);
+//        System.out.println("emplForUdate "+emplForUdate);
 
 
         //Check presence this Employee in database
-        if ((!myEmpl.getName().equals(emplForUdate.getName()))&&EmployeeAllServlet.mylist.contains(emplForUdate)) {
-            request.setAttribute("error","Trying to input Employee with name stored in DB!!!");
-            request.setAttribute("employee", emplForUdate);
-            request.setAttribute("id",id); //!!!!
-            String path = "/views/employees/employee.jsp";
-            ServletContext servletContext = getServletContext();
-            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
-            requestDispatcher.forward(request, response);
-        } else {
-            //Call Update
-            boolean updateRes = DAOEmployeesHBN.update(id, emplForUdate);
-            if (updateRes) {
-                //back to listEmployees
-                String path = request.getContextPath() + "/employees";
-                response.sendRedirect(path);
-            } else {
-                request.setAttribute("error", "Check data! Update SQL mistake!!!");
-                request.setAttribute("employee", emplForUdate);
-                request.setAttribute("id",id); //!!!!
-                String path = "/views/employees/employee.jsp";
-                ServletContext servletContext = getServletContext();
-                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
-                requestDispatcher.forward(request, response);
-            }
-        }
+//        if ((!myEmpl.getName().equals(emplForUdate.getName()))&&EmployeeAllServlet.mylist.contains(emplForUdate)) {
+//            request.setAttribute("error","Trying to input Employee with name stored in DB!!!");
+//            request.setAttribute("employee", emplForUdate);
+//            request.setAttribute("id",id); //!!!!
+//            String path = "/views/employees/employee.jsp";
+//            ServletContext servletContext = getServletContext();
+//            RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+//            requestDispatcher.forward(request, response);
+//        } else {
+//            //Call Update
+//            boolean updateRes = DAOEmployeesHBN.update(id, emplForUdate);
+//            if (updateRes) {
+//                //back to listEmployees
+//                String path = request.getContextPath() + "/employees";
+//                response.sendRedirect(path);
+//            } else {
+//                request.setAttribute("error", "Check data! Update SQL mistake!!!");
+//                request.setAttribute("employee", emplForUdate);
+//                request.setAttribute("id",id); //!!!!
+//                String path = "/views/employees/employee.jsp";
+//                ServletContext servletContext = getServletContext();
+//                RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
+//                requestDispatcher.forward(request, response);
+//            }
+//        }
     }
 }

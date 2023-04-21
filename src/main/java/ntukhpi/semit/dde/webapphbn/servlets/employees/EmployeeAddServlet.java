@@ -14,11 +14,12 @@ import java.io.IOException;
 
 @WebServlet("/addEmployee")
 public class EmployeeAddServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("EmployeeAddServlet#doGet");
         request.setAttribute("error",null);
-        Employee emplData = new Employee(-1l,null,true,-1,-1.0);
+        Employee emplData = new Employee(-1l,null,true,-1,-1.0,null);
         request.setAttribute("employee",emplData);
         request.setAttribute("id",-1);
         String path = "/views/employees/employee.jsp";
@@ -40,7 +41,7 @@ public class EmployeeAddServlet extends HttpServlet {
         int age = Integer.parseInt(ageStr);
         double salary = Double.parseDouble(salaryStr);
         boolean pol = polStr.equals("male") ? true : false;
-        Employee empl = new Employee(-1l, nameStr, pol, age, salary);
+        Employee empl = new Employee(-1l, nameStr, pol, age, salary,null);
 
         //Check presence this Employee in database
         if (EmployeeAllServlet.mylist.contains(empl)) {

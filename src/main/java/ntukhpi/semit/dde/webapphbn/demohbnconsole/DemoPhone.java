@@ -35,7 +35,7 @@ public class DemoPhone {
                 transaction = session.beginTransaction();
                 //Add new Employee
                 nameForInsert = "Lozhkin";
-                owner = new Employee(-1l, nameForInsert, false, 33, 77000.0);
+                owner = new Employee(-1l, nameForInsert, false, 33, 77000.0,null);
                 System.out.println(owner);
                 if (DAOEmployeesHBN.insert(owner)) {
                     System.out.println("\nNew Employee added");
