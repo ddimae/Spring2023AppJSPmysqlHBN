@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,8 @@ public class DemoWorkInterval {
             System.err.println("Connect to database not executed!!!");
             System.exit(777);
         } else {
+            //before test exec SQL query DELETE FROM work_in_team WHERE id_empl>0;
+            // this is allowed to work with empty table
             //Select employees and teams
             employees = DAOEmployeesHBN.getEmployeeList();
             teams = DAOTeamsHBN.getTeamList();
@@ -113,7 +114,7 @@ public class DemoWorkInterval {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            outputTeamsEmplyeesList();
+            outputTeamsEmployeesList();
             //======================================================
             //Test clear list
             System.out.println("\nTest clear list");
@@ -127,29 +128,32 @@ public class DemoWorkInterval {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            outputTeamsEmplyeesList();
+            outputTeamsEmployeesList();
             //======================================================
             //======================================================
             //Test add list
             System.out.println("\nTest add list");
             team = teams.get(0);
-            employees=DAOEmployeesHBN.getEmployeeList().stream().filter((empl)->empl.isPol()).toList();
-            DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees,team, new WorkInterval(LocalDate.now(),null));
+            employees = DAOEmployeesHBN.getEmployeeList().stream().filter((empl) -> empl.isPol()).toList();
+            DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees, team,
+                    new WorkInterval(LocalDate.of(2022, 9, 15),
+                    LocalDate.of(2022, 11, 25))
+            );
             team = teams.get(3);
-            employees=DAOEmployeesHBN.getEmployeeList();
-            DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees,team, new WorkInterval(LocalDate.now(),null));
+            employees = DAOEmployeesHBN.getEmployeeList();
+            DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees, team);
             //Look current state
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            outputTeamsEmplyeesList();
+            outputTeamsEmployeesList();
             //======================================================
             //======================================================
             //Test delete from list employee for team
             System.out.println("\nTest delete some employee from list");
-            employees=DAOEmployeesHBN.getEmployeeList();
+            employees = DAOEmployeesHBN.getEmployeeList();
             team = teams.get(1);
             employee = employees.get(3);
             DAOWorkIntervalHBN.deleteInfoAboutWorkingEmployeeForTeam(employee, team);
@@ -161,15 +165,44 @@ public class DemoWorkInterval {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            outputTeamsEmplyeesList();
+            outputTeamsEmployeesList();
+            //======================================================
+            //======================================================
+            //Test delete from list employee for team
+            System.out.println("\nTest UPDATE methods");
+            //Clear list
+            System.out.println("\nClear list");
+            team = teams.get(4);
+            DAOWorkIntervalHBN.deleteInfoAboutWorkingEmployeesListForTeam(team);
+            team = DAOTeamsHBN.getTeamByName(team.getTeamCod());
+            outputTeamsEmployeesList(team);
+            //Create list with Employeees from 28 to 35 years old and add it in list
+            System.out.println("\nCreate list with Employeees from 28 to 35 years old and add it in list");
+            employees = DAOEmployeesHBN.getEmployeeList().stream().filter((empl)->empl.getAge()>=28 && empl.getAge()<=35).toList();
+            DAOWorkIntervalHBN.addInfoAboutWorkingEmployeesListForTeam(employees,team,new WorkInterval(LocalDate.of(2023,1,1),null));
+            team = DAOTeamsHBN.getTeamByName(team.getTeamCod());
+            outputTeamsEmployeesList(team);
+            //Change period for two employees
+            System.out.println("\nChange period for two employees");
+            employee = employees.get(0); //Zhuk
+            DAOWorkIntervalHBN.changeWorkEndForEmployeeOfTeam(employee, team,new WorkInterval(LocalDate.of(2020,1,1),LocalDate.of(2022,1,1)));
+            employee = employees.get(employees.size()-1); //Popova
+            DAOWorkIntervalHBN.changeWorkEndForEmployeeOfTeam(employee, team);
+            team = DAOTeamsHBN.getTeamByName(team.getTeamCod());
+            outputTeamsEmployeesList(team);
+            //Close team
+            System.out.println("\nClose team");
+            DAOWorkIntervalHBN.changeWorkEndForEmployeesListOfTeam(team);
+            team = DAOTeamsHBN.getTeamByName(team.getTeamCod());
+            outputTeamsEmployeesList(team);
             //======================================================
 
         }
     }
 
-    private static void outputTeamsEmplyeesList() {
+    private static void outputTeamsEmployeesList() {
         //OUTPUT INFO ABOUT WORK
-        System.out.println("\nInfo about teams");
+        System.out.println("Info about teams");
         List<Team> teams = DAOTeamsHBN.getTeamList();
         for (Team t : teams) {
             System.out.println(t.getTeamCod() + " " + t.getPl());
@@ -183,6 +216,20 @@ public class DemoWorkInterval {
             } else {
                 System.out.println("No info");
             }
+        }
+    }
+
+    private static void outputTeamsEmployeesList(Team team) {
+        System.out.println("\nInfo about " + team.getTeamCod() + " " + team.getPl());
+        Map<Employee, WorkInterval> sklad = team.getEmployeesOfTeam();
+        if (!sklad.isEmpty()) {
+            for (Map.Entry<Employee, WorkInterval> entry : sklad.entrySet()) {
+                System.out.println(entry.getKey() + " ("
+                        + entry.getValue().getWorkStart() + ","
+                        + entry.getValue().getWorkEnd() + ")");
+            }
+        } else {
+            System.out.println("No info");
         }
     }
 }
