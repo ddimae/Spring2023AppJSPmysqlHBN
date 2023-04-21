@@ -20,26 +20,7 @@ import java.util.List;
  * In presented view can work with any type of DBMS
  */
 public class DAOEmployeesHBN {
-    // Set of final String variables with SQL query text
-
-//    private static final String SELECT_BY_ID_SQL_TEXT =
-//            "SELECT * FROM EMPLOYEE WHERE id=?";
-//    private static final String SELECT_ID_SQL_TEXT =
-//            "SELECT * FROM employee WHERE name=?";
-//    private static final String INSERT_SQL_TEXT =
-//            "INSERT INTO employee (name,pol,age,salary) VALUES (?,?,?,?)";
-//
-//    private static final String UPDATE_SQL_TEXT =
-//            "UPDATE employee SET name = ?,pol = ?,age = ?,salary = ? WHERE (id = ?)";
-//
-//    private static final String UPDATE_NAME_SQL_TEXT =
-//            "UPDATE employee SET name = ? WHERE (id = ?)";
-//
-//    private static final String DELETE_ID_SQL_TEXT =
-//            "DELETE FROM employee WHERE (id = ?)";
-
-
-    /**
+     /**
      * Method returned list of Employee get from DB table Employee
      *
      * @return EmployeeList (extends ArrayList<Employee>)
