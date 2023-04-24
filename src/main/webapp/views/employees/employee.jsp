@@ -9,7 +9,7 @@
 <h1>Employee</h1>
 <p style="color:red">${error}<br></p>
 <form
-        <c:if test="${id==-1}">
+        <c:if test="${id==0}">
             action="addEmployee"
         </c:if>
         <c:if test="${id>0}">
@@ -21,7 +21,8 @@
         <input required type="text" id="empl_name" name="name"
                placeholder="Input surname an English"
                value="${employee.name}"
-               pattern="[A-Z][a-z]{1,14}" title="Required, Surname an English,
+               pattern="[A-Z][a-z]{1,14}"
+               title="Required, Surname an English,
            first letter capital, other - small, no more 15">
     </p>
     <p><label for="empl_age">Age:</label></p>

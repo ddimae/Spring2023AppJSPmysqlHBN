@@ -19,9 +19,9 @@ public class EmployeeAddServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("EmployeeAddServlet#doGet");
         request.setAttribute("error",null);
-        Employee emplData = new Employee(-1l,null,true,-1,-1.0,null);
+        Employee emplData = new Employee("noname",true,-1,-1.0);
         request.setAttribute("employee",emplData);
-        request.setAttribute("id",-1);
+        request.setAttribute("id",0);
         String path = "/views/employees/employee.jsp";
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
@@ -47,7 +47,7 @@ public class EmployeeAddServlet extends HttpServlet {
         if (EmployeeAllServlet.mylist.contains(empl)) {
             request.setAttribute("error","Trying to input Employee with name stored in DB!!!");
             request.setAttribute("employee", empl);
-            request.setAttribute("id",-1);
+            request.setAttribute("id",0);
             String path = "/views/employees/employee.jsp";
             ServletContext servletContext = getServletContext();
             RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);

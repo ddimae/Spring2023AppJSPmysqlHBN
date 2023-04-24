@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet("/employees")
 public class EmployeeAllServlet extends HttpServlet {
 
-    public static List<Employee> mylist = new EmployeeList();
+    public static List<Employee> mylist = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

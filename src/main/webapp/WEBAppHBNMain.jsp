@@ -12,5 +12,9 @@
 <h2>SEMIT, CSIT, NTU "KhPI"</h2>
 <br><br><br>
 <h3>Сьогодні <%=java.time.LocalDate.now() %></h3>
+<br><br>
+<form action="employees" method="GET">
+    <input type="submit" value="Employees">
+</form>
 </body>
 </html>
